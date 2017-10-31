@@ -52,7 +52,3 @@ class Conveyorlc(CMakePackage):
     # depends_on('mpi')
 
     depends_on('cmake', type='build')
-
-    def install(self, spec, prefix):
-        # FIXME: Unknown build system
-        make('install')
