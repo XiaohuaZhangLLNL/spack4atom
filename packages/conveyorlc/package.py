@@ -43,12 +43,13 @@ from spack import *
 class Conveyorlc(CMakePackage):
     """FIXME: Put a proper description of your package here."""
 
-    homepage = "https://lc.llnl.gov/bitbucket/projects/XZR/repos/conveyorlc/browse"
+    homepage = "https://github.com/XiaohuaZhangLLNL/conveyorlc"
     url      = ""
 
-    version('master', git="ssh://git@cz-bitbucket.llnl.gov:7999/xzr/conveyorlc.git")
+    version('master', git="git@github.com:XiaohuaZhangLLNL/conveyorlc.git")
 
     depends_on('boost+mpi')
+    depends_on('sqlite')
     # depends_on('mpi')
 
     depends_on('cmake', type='build')
