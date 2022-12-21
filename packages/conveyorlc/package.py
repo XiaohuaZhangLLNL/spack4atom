@@ -38,18 +38,40 @@
 # please first remove this boilerplate and all FIXME comments.
 #
 from spack import *
+import os
 
 
 class Conveyorlc(CMakePackage):
-    """FIXME: Put a proper description of your package here."""
+    """
+    A Parallel Virtual Screening Pipeline for Docking and MM/GSBA.
+    """
 
     homepage = "https://github.com/XiaohuaZhangLLNL/conveyorlc"
-    url      = ""
+    url = (
+        "https://github.com/XiaohuaZhangLLNL/conveyorlc/archive/refs/tags/v1.1.2.tar.gz"
+    )
+    git = "https://github.com/XiaohuaZhangLLNL/conveyorlc.git"
 
-    version('master', git="git@github.com:XiaohuaZhangLLNL/conveyorlc.git")
+    version("master", branch="master")
 
-    depends_on('boost+mpi')
-    depends_on('sqlite')
-    # depends_on('mpi')
+    depends_on("boost@1.72 +mpi")
+    depends_on("cmake", type="build")
+    depends_on("conduit@0.8.4 +hdf5")
+    depends_on("hdf5@1.10.4")
+    depends_on("openbabel@3.0.0 ~python ~gui")
+    depends_on("sqlite")
 
-    depends_on('cmake', type='build')
+    def patch(self):
+        """
+        Patch to remove conduit - we can define these on our own.
+        """
+        with working_dir(self.stage.source_path):
+            os.remove(os.path.join("cmake", "FindConduit.cmake"))
+
+    def cmake_args(self):
+
+        args = [
+            "-DOPENBABEL3_INCLUDE_DIRS=%s"
+            % os.path.join(self.spec["openbabel"].prefix, "include", "openbabel3")
+        ]
+        return args
