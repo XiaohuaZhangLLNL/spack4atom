@@ -58,7 +58,7 @@ class Conveyorlc(CMakePackage):
     depends_on("cmake", type="build")
     depends_on("conduit@0.8.4 +hdf5")
     depends_on("hdf5@1.10.4")
-    depends_on("openbabel@3.0.0 ~python ~gui")
+    depends_on("openbabel@master ~python ~gui")
     depends_on("sqlite")
 
     def patch(self):
